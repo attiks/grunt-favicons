@@ -19,7 +19,7 @@ exports.favicons = {
     },
 
     // testing if config file exists
-    htmlExists: function(test) {
+    ieExists: function(test) {
         test.expect(1);
         var exists = fs.existsSync(iePath);
         test.ok(exists, 'test.xml does not exist.');
