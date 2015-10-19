@@ -380,7 +380,7 @@ module.exports = function(grunt) {
 
                     if (options.windowsTile) {
                         if (needIEconfig) {
-                            elements += options.indent + "<meta name=\"msapplication-config\" content=\"" + options.HTMLPrefix + options.ieconfig + "\"/>\n";
+                            elements += options.indent + "<meta name=\"msapplication-config\" content=\"" + options.HTMLPrefix + options.ieconfig + (options.timestamp ? timestamp : '') + "\"/>\n";
                         }
                         else {
                             elements += options.indent + "<meta name=\"msapplication-square70x70logo\" content=\"" + options.HTMLPrefix + "windows-tile-70x70.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
