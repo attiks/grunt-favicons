@@ -18,6 +18,10 @@ Generates all known types and sizes icons from PNG image. Uses ImageMagick.
 - `apple-touch-icon-120x120.png` (120x120) — iPhone retina, iOS 7 and higher;
 - `apple-touch-icon-144x144.png` (144x144) — iPad retina;
 - `apple-touch-icon-152x152.png` (152x152) — iPad retina iOS 7;
+- `windows-tile-70x70.png` (70x70) — Windows 8 tile;
+- `windows-tile-150x150.png` (150x150) — Windows 8 tile;
+- `windows-tile-310x150.png` (310x150) — Windows 8 tile;
+- `windows-tile-310x310.png` (310x310) — Windows 8 tile;
 - `windows-tile-144x144.png` (144x144) — Windows 8 tile;
 - `coast-icon-228x228.png` (228x228) - Coast browser;
 - `firefox-icon-16x16.png` (16x16) - Firefox on Android / Windows;
@@ -33,6 +37,8 @@ Generates all known types and sizes icons from PNG image. Uses ImageMagick.
 - `homescreen-192x192.png` (196x196) - Android Homescreen.
 
 Adds changes to `html` file.
+
+Can create an `ieconfig.xml` file.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1` and ImageMagick.
@@ -93,6 +99,12 @@ Type: `String`
 Default value: `''`
 
 Path to HTML you want to add links to icons.
+
+#### options.ieconfig
+Type: `String`
+Default value: `''`
+
+Path to ieconfig.xml file you want to create.
 
 #### options.HTMLPrefix
 Type: `String`

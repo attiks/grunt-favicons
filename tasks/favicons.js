@@ -107,6 +107,8 @@ module.exports = function(grunt) {
 
         // Append all icons to HTML as meta tags (needs cheerio)
         var needHTML = options.html !== undefined && options.html !== "";
+        var needIEconfig = options.ieconfig !== undefined && options.ieconfig !== "";
+        var timestamp = '?ts=' + new Date().getTime().toString();
 
         if (needHTML) {
             var cheerio = require("cheerio");
@@ -342,25 +344,53 @@ module.exports = function(grunt) {
                     convert(combine(source, f.dest, "144x144", "windows-tile-144x144.png", additionalOpts));
                     convert(combine(source, f.dest, "150x150", "windows-tile-150x150.png", additionalOpts));
                     convert(combine(source, f.dest, "310x310", "windows-tile-310x310.png", additionalOpts));
+                    if (options.tileColor !== "none") {
+                        convert(combine(source, f.dest, "310x150", "windows-tile-310x150.png", additionalOpts + ' -gravity center -background "' + options.tileColor + '" -extent 310x150 '));
+                    }
                     grunt.log.ok();
 
+                }
+
+                if (needIEconfig) {
+                    grunt.log.write('Updating IEconfig... ');
+                    var elements = "";
+
+                    elements += "<browserconfig>\n";
+                    elements += options.indent + "<msapplication>\n";
+                    elements += options.indent + options.indent + "<tile>\n";
+                    elements += options.indent + options.indent + options.indent + "<square70x70logo src=\"" + options.HTMLPrefix + "windows-tile-70x70.png\"/>\n";
+                    elements += options.indent + options.indent + options.indent + "<square150x150logo src=\"" + options.HTMLPrefix + "windows-tile-150x150.png\"/>\n";
+                    elements += options.indent + options.indent + options.indent + "<wide310x150logo src=\"" + options.HTMLPrefix + "windows-tile-310x150.png\"/>\n";
+                    elements += options.indent + options.indent + options.indent + "<square310x310logo src=\"" + options.HTMLPrefix + "windows-tile-310x310.png\"/>\n";
+                    elements += options.indent + options.indent + options.indent + "<TileColor>" + options.tileColor + "</TileColor>\n";
+                    elements += options.indent + options.indent + "</tile>>\n";
+                    elements += options.indent + "</msapplication>\n";
+                    elements += "</browserconfig>\n";
+
+                    // Saving HTML
+                    grunt.file.write(options.ieconfig, elements);
+
+                    grunt.log.ok();
                 }
 
                 // Append icons to <HEAD>
                 if (needHTML) {
                     grunt.log.write('Updating HTML... ');
-
-                    var timestamp = '?ts=' + new Date().getTime().toString();
-
                     var elements = "";
 
                     if (options.windowsTile) {
-                        elements += options.indent + "<meta name=\"msapplication-square70x70logo\" content=\"" + options.HTMLPrefix + "windows-tile-70x70.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
-                        elements += options.indent + "<meta name=\"msapplication-square150x150logo\" content=\"" + options.HTMLPrefix + "windows-tile-150x150.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
-                        elements += options.indent + "<meta name=\"msapplication-square310x310logo\" content=\"" + options.HTMLPrefix + "windows-tile-310x310.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
-                        elements += options.indent + "<meta name=\"msapplication-TileImage\" content=\"" + options.HTMLPrefix + "windows-tile-144x144.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
-                        if (options.tileColor !== "none") {
-                            elements += options.indent + "<meta name=\"msapplication-TileColor\" content=\"" + options.tileColor + "\"/>\n";
+                        if (needIEconfig) {
+                            elements += options.indent + "<meta name=\"msapplication-config\" content=\"" + options.HTMLPrefix + options.ieconfig + "\"/>\n";
+                        }
+                        else {
+                            elements += options.indent + "<meta name=\"msapplication-square70x70logo\" content=\"" + options.HTMLPrefix + "windows-tile-70x70.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
+                            elements += options.indent + "<meta name=\"msapplication-square150x150logo\" content=\"" + options.HTMLPrefix + "windows-tile-150x150.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
+                            elements += options.indent + "<meta name=\"msapplication-square310x310logo\" content=\"" + options.HTMLPrefix + "windows-tile-310x310.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
+                            elements += options.indent + "<meta name=\"msapplication-wide310x150logo\" content=\"" + options.HTMLPrefix + "windows-tile-310x150.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
+                            elements += options.indent + "<meta name=\"msapplication-TileImage\" content=\"" + options.HTMLPrefix + "windows-tile-144x144.png" + (options.timestamp ? timestamp : '') + "\"/>\n";
+                            if (options.tileColor !== "none") {
+                                elements += options.indent + "<meta name=\"msapplication-TileColor\" content=\"" + options.tileColor + "\"/>\n";
+                            }
                         }
                     }
 
