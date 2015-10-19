@@ -353,22 +353,22 @@ module.exports = function(grunt) {
 
                 if (needIEconfig) {
                     grunt.log.write('Updating IEconfig... ');
-                    var elements = "";
+                    var lines = "";
 
-                    elements += "<browserconfig>\n";
-                    elements += options.indent + "<msapplication>\n";
-                    elements += options.indent + options.indent + "<tile>\n";
-                    elements += options.indent + options.indent + options.indent + "<square70x70logo src=\"" + options.HTMLPrefix + "windows-tile-70x70.png\"/>\n";
-                    elements += options.indent + options.indent + options.indent + "<square150x150logo src=\"" + options.HTMLPrefix + "windows-tile-150x150.png\"/>\n";
-                    elements += options.indent + options.indent + options.indent + "<wide310x150logo src=\"" + options.HTMLPrefix + "windows-tile-310x150.png\"/>\n";
-                    elements += options.indent + options.indent + options.indent + "<square310x310logo src=\"" + options.HTMLPrefix + "windows-tile-310x310.png\"/>\n";
-                    elements += options.indent + options.indent + options.indent + "<TileColor>" + options.tileColor + "</TileColor>\n";
-                    elements += options.indent + options.indent + "</tile>>\n";
-                    elements += options.indent + "</msapplication>\n";
-                    elements += "</browserconfig>\n";
+                    lines += "<browserconfig>\n";
+                    lines += options.indent + "<msapplication>\n";
+                    lines += options.indent + options.indent + "<tile>\n";
+                    lines += options.indent + options.indent + options.indent + "<square70x70logo src=\"" + options.HTMLPrefix + "windows-tile-70x70.png\"/>\n";
+                    lines += options.indent + options.indent + options.indent + "<square150x150logo src=\"" + options.HTMLPrefix + "windows-tile-150x150.png\"/>\n";
+                    lines += options.indent + options.indent + options.indent + "<wide310x150logo src=\"" + options.HTMLPrefix + "windows-tile-310x150.png\"/>\n";
+                    lines += options.indent + options.indent + options.indent + "<square310x310logo src=\"" + options.HTMLPrefix + "windows-tile-310x310.png\"/>\n";
+                    lines += options.indent + options.indent + options.indent + "<TileColor>" + options.tileColor + "</TileColor>\n";
+                    lines += options.indent + options.indent + "</tile>>\n";
+                    lines += options.indent + "</msapplication>\n";
+                    lines += "</browserconfig>\n";
 
                     // Saving HTML
-                    grunt.file.write(options.ieconfig, elements);
+                    grunt.file.write(options.ieconfig, lines);
 
                     grunt.log.ok();
                 }
