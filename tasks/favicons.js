@@ -360,7 +360,9 @@ module.exports = function(grunt) {
                     lines += options.indent + options.indent + "<tile>\n";
                     lines += options.indent + options.indent + options.indent + "<square70x70logo src=\"" + options.HTMLPrefix + "windows-tile-70x70.png\"/>\n";
                     lines += options.indent + options.indent + options.indent + "<square150x150logo src=\"" + options.HTMLPrefix + "windows-tile-150x150.png\"/>\n";
-                    lines += options.indent + options.indent + options.indent + "<wide310x150logo src=\"" + options.HTMLPrefix + "windows-tile-310x150.png\"/>\n";
+                    if (options.tileColor !== "none") {
+                        lines += options.indent + options.indent + options.indent + "<wide310x150logo src=\"" + options.HTMLPrefix + "windows-tile-310x150.png\"/>\n";
+                    }
                     lines += options.indent + options.indent + options.indent + "<square310x310logo src=\"" + options.HTMLPrefix + "windows-tile-310x310.png\"/>\n";
                     lines += options.indent + options.indent + options.indent + "<TileColor>" + options.tileColor + "</TileColor>\n";
                     lines += options.indent + options.indent + "</tile>>\n";
