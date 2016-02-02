@@ -92,6 +92,24 @@ module.exports = function(grunt) {
               },
               src: 'test/test.png',
               dest: 'test/out'
+            },
+            stage6: {
+                options: {
+                    html: 'test/out/test.html.twig',
+                    ieconfig: 'test/out/test.xml',
+                    HTMLPrefix: '{{ releaseDir }}/icons/',
+                    trueColor: true,
+                    precomposed: true,
+                    appleTouchBackgroundColor: "#a0b4bb",
+                    coast: true,
+                    apple: false,
+                    regular: false,
+                    windowsTile: true,
+                    tileBlackWhite: false,
+                    tileColor: 'auto'
+                },
+                src: 'test/img.jpg',
+                dest: 'test/out'
             }
         },
 
@@ -119,7 +137,8 @@ module.exports = function(grunt) {
             stage2: ['test/test_stage2.js'],
             stage3: ['test/test_stage3.js'],
             stage4: ['test/test_stage4.js'],
-            stage5: ['test/test_stage5.js']
+            stage5: ['test/test_stage5.js'],
+            stage6: ['test/test_stage6.js']
         },
 
         clean: ['test/out']
@@ -137,8 +156,9 @@ module.exports = function(grunt) {
     grunt.registerTask('stage3', ['clean', 'copy:php', 'copy:manifest', 'favicons:stage3', 'nodeunit:stage3']);
     grunt.registerTask('stage4', ['clean', 'favicons:stage4', 'nodeunit:stage4']);
     grunt.registerTask('stage5', ['clean', 'copy', 'favicons:stage5', 'nodeunit:stage5']);
+    grunt.registerTask('stage6', ['clean', 'copy', 'favicons:stage6', 'nodeunit:stage6']);
 
-    grunt.registerTask('test', ['jshint', 'stage1', 'stage2', 'stage3', 'stage4', 'stage5', 'clean']);
+    grunt.registerTask('test', ['jshint', 'stage1', 'stage2', 'stage3', 'stage4', 'stage5', 'stage6', 'clean']);
     grunt.registerTask('default', ['test']);
 
 };

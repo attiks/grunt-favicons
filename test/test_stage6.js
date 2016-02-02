@@ -6,6 +6,7 @@ var cheerio = require("cheerio");
 
 var path = 'test/out';
 var htmlPath = path + '/test.html.twig';
+var iePath = path + '/test.xml';
 
 exports.favicons = {
 
@@ -17,7 +18,31 @@ exports.favicons = {
         test.done();
     },
 
-    // testing if in secund run clear and generates all meta icons
+    // testing if config file exists
+    ieExists: function(test) {
+        test.expect(1);
+        var exists = fs.existsSync(iePath);
+        test.ok(exists, 'test.xml does not exist.');
+        test.done();
+    },
+
+    // testing if html contains reference to config file
+    htmlmrExists: function(test) {
+        test.expect(1);
+        var $ = cheerio.load(grunt.file.read(htmlPath));
+        var metaIcon = 0;
+        $('meta').each(function(i, elem) {
+            var name = $(this).attr('name');
+            if(name && (name === 'msapplication-config')) {
+                metaIcon ++;
+            }
+        });
+
+        test.ok(metaIcon === 1, 'meta icons length should be 1; but is ' + metaIcon);
+        test.done();
+    },
+
+    // testing if html meta data is not in html
     htmlmiExists: function(test) {
         test.expect(1);
         var $ = cheerio.load(grunt.file.read(htmlPath));
@@ -31,23 +56,7 @@ exports.favicons = {
             }
         });
 
-        test.ok(metaIcon === 5, 'meta icons length shount be 5; but is ' + metaIcon);
-        test.done();
-    },
-
-    // testing if in secund run clear and generates all link apple icons
-    htmllaiExists: function(test) {
-        test.expect(1);
-        var $ = cheerio.load(grunt.file.read(htmlPath));
-        var linkIcon = 0;
-        $('meta').each(function(i, elem) {
-            var name = $(this).attr('name');
-            if(name && name.indexOf('msapplication') >= 0) {
-                linkIcon ++;
-            }
-        });
-
-        test.ok(linkIcon === 6, 'link msapplication icons length shount be 5; but is ' + linkIcon);
+        test.ok(metaIcon === 0, 'meta icons length should be 0; but is ' + metaIcon);
         test.done();
     }
 };
